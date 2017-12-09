@@ -68,7 +68,7 @@ def processRequest(req):
         yql_query = makeYqlQueryForShalat(req)
         if yql_query is None:
            return {}
-        yql_url = baseurl + yql_query
+        yql_url = baseurl + urlencode({yql_query})
         result = urlopen(yql_url).read()
         data = json.loads(result)
         res = makeWebhookResultFotShalat(data)
@@ -117,8 +117,8 @@ def makeWebhookResultFotShalat(data):
     if query is None:
         return {}		
 
-    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah "
-             "Shubuh " + datashalat.get('Fajr') + "Dzuhur " + datashalat.get('Dhuhr') + "Ashar " + datashalat.get('Asr') + "Maghrib " + datashalat.get('Maghrib') + "Isya " + datashalat.get('Isha')
+    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah \n\n"
+             "Shubuh " + datashalat.get('Fajr') + "\nDzuhur " + datashalat.get('Dhuhr') + "\nAshar " + datashalat.get('Asr') + "\nMaghrib " + datashalat.get('Maghrib') + "\nIsya " + datashalat.get('Isha')
 
     print("Response:")
     print(speech)
