@@ -112,9 +112,12 @@ def makeWebhookResultForShalat(data):
     datashalat = data.get('data')
     if datashalat is None:
         return {}
-			
+		
+    location = data.get('location')
+    if location is None:
+        return {}		
 
-    speech = "Jadwal Shalat Hari Ini Adalah \n\n" + \
+    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah \n\n" + \
              "Shubuh " + datashalat.get('Fajr') + "\nDzuhur " + datashalat.get('Dhuhr') + "\nAshar " + datashalat.get('Asr') + "\nMaghrib " + datashalat.get('Maghrib') + "\nIsya " + datashalat.get('Isha')
 
     print("Response:")
