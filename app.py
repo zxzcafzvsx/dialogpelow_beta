@@ -47,20 +47,6 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
-
-def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
-        return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-    result = urlopen(yql_url).read()
-    data = json.loads(result)
-    res = makeWebhookResult(data)
-    return res
 	
 def processRequest(req):
     if req.get("result").get("action")=="yahooWeatherForecast":
@@ -77,11 +63,29 @@ def processRequest(req):
         result = urlopen(baseurl).read()
         data = json.loads(result)
         res = makeWebhookResultForGetJoke(data)
+	elif req.get("result").get("action")=="shalat":			### DATA BARU
+        baseurl = "https://time.siswadi.com/"
+        yql_query = makeYqlQueryForShalat(req)
+        if yql_query is None:
+           return {}
+        yql_url = baseurl + yql_query
+        result = urlopen(yql_url).read()
+        data = json.loads(result)
+        res = makeWebhookResultFotShalat(data)
     else:
         return {}												### DATA BARU
     return res	
 
 
+def makeYqlQueryForShalat(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    city = parameters.get("geo-city")
+    if city is None:
+        return None
+
+    return "pray/" + city + ""	
+	
 def makeYqlQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
@@ -103,6 +107,29 @@ def makeWebhookResultForGetJoke(data):
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
     }	
+
+def makeWebhookResultForShalat(data):
+    datashalat = data.get('data')
+    if query is None:
+        return {}
+		
+    location = data.get('location')
+    if query is None:
+        return {}		
+
+    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah \n\n"
+             "Shubuh " + datashalat.get('Fajr') + "\nDzuhur " + datashalat.get('Dhuhr') + "\nAshar " + datashalat.get('Asr') + "\nMaghrib " + datashalat.get('Maghrib') + "\nIsya " + datashalat.get('Isha')
+
+    print("Response:")
+    print(speech)
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
 	
 def makeWebhookResult(data):
     query = data.get('query')
