@@ -63,15 +63,15 @@ def processRequest(req):
         result = urlopen(baseurl).read()
         data = json.loads(result)
         res = makeWebhookResultForGetJoke(data)
-#	elif req.get("result").get("action")=="shalat":			### DATA BARU
-#        baseurl = "https://time.siswadi.com/"
-#        yql_query = makeYqlQueryForShalat(req)
-#        if yql_query is None:
-#           return {}
-#        yql_url = baseurl + urlencode({yql_query})
-#        result = urlopen(yql_url).read()
-#        data = json.loads(result)
-#        res = makeWebhookResultForShalat(data)
+	elif req.get("result").get("action")=="shalat":			### DATA BARU
+        baseurl = "https://time.siswadi.com/"
+        yql_query = makeYqlQueryForShalat(req)
+        if yql_query is None:
+           return {}
+        yql_url = baseurl + urlencode({yql_query})
+        result = urlopen(yql_url).read()
+        data = json.loads(result)
+        res = makeWebhookResultForShalat(data)
     else:
         return {}												### DATA BARU
     return res	
