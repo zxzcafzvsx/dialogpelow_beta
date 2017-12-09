@@ -64,7 +64,7 @@ def processRequest(req):
         data = json.loads(result)
         res = makeWebhookResultForGetJoke(data)
     elif req.get("result").get("action")=="shalat":
-        baseurl = "https://time.siswadi.com/"
+        baseurl = "https://time.siswadi.com/pray/"
         yql_query = makeYqlQueryForShalat(req)
         if yql_query is None:
            return {}
