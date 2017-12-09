@@ -108,28 +108,28 @@ def makeWebhookResultForGetJoke(data):
         "source": "apiai-weather-webhook-sample"
     }	
 
-def makeWebhookResultFotShalat(data):
-    datashalat = data.get('data')
-    if query is None:
-        return {}
-		
-    location = data.get('location')
-    if query is None:
-        return {}		
-
-    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah \n\n"
-             "Shubuh " + datashalat.get('Fajr') + "\nDzuhur " + datashalat.get('Dhuhr') + "\nAshar " + datashalat.get('Asr') + "\nMaghrib " + datashalat.get('Maghrib') + "\nIsya " + datashalat.get('Isha')
-
-    print("Response:")
-    print(speech)
-
-    return {
-        "speech": speech,
-        "displayText": speech,
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
+#def makeWebhookResultFotShalat(data):
+#    datashalat = data.get('data')
+#    if query is None:
+#        return {}
+#		
+#    location = data.get('location')
+#    if query is None:
+#        return {}		
+#
+#    speech = "Jadwal Shalat Hari Ini Di " + location.get('address') + " Adalah \n\n"
+#             "Shubuh " + datashalat.get('Fajr') + "\nDzuhur " + datashalat.get('Dhuhr') + "\nAshar " + datashalat.get('Asr') + "\nMaghrib " + datashalat.get('Maghrib') + "\nIsya " + datashalat.get('Isha')
+#
+#    print("Response:")
+#    print(speech)
+#
+#    return {
+#        "speech": speech,
+#        "displayText": speech,
+#        # "data": data,
+#        # "contextOut": [],
+#        "source": "apiai-weather-webhook-sample"
+#    }
 	
 def makeWebhookResult(data):
     query = data.get('query')
