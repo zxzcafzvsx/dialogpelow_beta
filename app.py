@@ -63,15 +63,6 @@ def processRequest(req):
         result = urlopen(baseurl).read()
         data = json.loads(result)
         res = makeWebhookResultForGetJoke(data)
-	elif req.get("result").get("action")=="shalat":				### DATA BARU
-        baseurl = "https://query.yahooapis.com/v1/public/yql?"
-        yql_query = makeYqlQuery(req)
-        if yql_query is None:
-           return {}
-        yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-        result = urlopen(yql_url).read()
-        data = json.loads(result)
-        res = makeWebhookResult(data)
     else:
         return {}												### DATA BARU
     return res	
